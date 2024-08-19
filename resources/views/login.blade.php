@@ -1,4 +1,6 @@
-@extends('app')
+@extends('layouts.app')
+
+@section('title','Login')
 
 @section('content')
   <div class="flex flex-col items-center justify-center h-screen">

@@ -61,30 +61,12 @@ class AuthController extends Controller
             $credentials['email'] = $credentials['username'];
             unset($credentials['username']);
             if (! $token = auth()->attempt($credentials)) {
-                if (request()->expectsJson()){
-                    return response()->json([
-                        'status' => 'error',
-                        'message' =>'login failed',
-                        'data'=>null,
-                    ]);
-                }
                 return redirect('/login')->withErrors(['login' => 'Incorrect username or password']);
             }
         }
         
         $user = auth()->user();
-        $data = [
-            'username' => $user['username'],
-            'token' => $token,
-        ];
-        return response()->json([
-            'status' => 'success',
-            'message' =>'login success',
-            'data'=>$data,
-        ]);
-        auth()->token();
-
-        return response()->json(auth()->user());
+        return redirect('/');
     }
   
     /**

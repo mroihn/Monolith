@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @section('title','Detail')
 
+
 @section('content')
     <div class="grid grid-cols-4">
         <div class="col-span-3 relative top-[80px] px-5">

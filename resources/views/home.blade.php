@@ -2,10 +2,6 @@
 
 @section('title','Home')
 
-@auth
-    @section('nama',$user->username)
-@endauth
-
 
 @section('content')
     <div class="grid grid-cols-4">

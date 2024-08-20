@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/',[FilmController::class,'index']);
 Route::get('/film/{id}',[FilmController::class,'show']);
+Route::get('/my_list/{id}',[FilmController::class,'my_list'])->middleware('jwt_auth');
 
 Route::get('/logout',[AuthController::class,'logout']);
 
@@ -27,12 +28,5 @@ Route::post(
     [AuthController::class,'register']
 )->name('post_register');
 
-
-// Route::get('/me', [AuthController::class,'me'])->middleware('jwt_auth');
-
-// Route::get('/register', [RegisterController::class, 'showRegisterForm'])
-//   ->name('register');
-// Route::post('/register', [RegisterController::class, 'register'])
-//   ->name('register.post');
 
 

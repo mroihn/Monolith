@@ -11,8 +11,10 @@
       @if (View::getSection('title')!='Login' && View::getSection('title')!='Register') 
         <div class="relative">
           <div class="bg-black h-20 border border-white border-b w-screen top-0 fixed text-white flex items-center px-5 z-[100]">
-            <div class="text-xl font-bold">Monolith</div>
-            <form class="absolute left-[200px] w-[700px]" action="/">
+            <a href="/">
+              <div class="text-xl font-bold">Monolith</div>
+            </a>
+            <form class="absolute left-[200px] w-[300px]" action="/">
               <input type="text" name="search" placeholder="Search film" autocomplete="off" aria-label="Search film" class="px-3 py-2 w-full font-semibold placeholder-gray-500 text-black rounded-2xl ring-2 ring-white">
             </form>
             @auth
@@ -21,8 +23,22 @@
                   <div>Logout</div>
                 </div>
               </a>   
-              <div class="absolute font-semibold right-[170px]">@yield('nama')</div>
+              <div class="absolute font-semibold right-[170px]">{{$user->username}}</div>
+              <div class="absolute font-semibold right-[250px]">🪙 {{$user->balance}}</div>
             @endauth
+
+            @auth
+              <a href="/my_list/{{$user->id}}" class="absolute right-[400px]">
+                <div class="bg-black text-white ease-in duration-200 hover:bg-white hover:text-black w-[100px] h-[50px]  font-semibold flex items-center justify-center">
+                  <div>My List</div>
+                </div>
+              </a>
+            @endauth
+            <a href="/" class="absolute right-[520px]">
+              <div class="bg-black text-white ease-in duration-200 hover:bg-white hover:text-black w-[100px] h-[50px]  font-semibold flex items-center justify-center">
+                <div>Home</div>
+              </div>
+            </a>
             
             @guest
             <a href="/login" class="absolute right-5">

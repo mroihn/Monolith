@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
   
 use Validator;
 use App\Models\User;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
@@ -52,7 +53,7 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function login()
+    public function login(Request $request)
     {
 
         $credentials = request(['username', 'password']);
@@ -66,23 +67,7 @@ class AuthController extends Controller
             }
         }
         
-        // $user = auth()->user();
-        
-        // return response()->json(JWTAuth::user());
-        // return redirect('/me')->withCookie(cookie('token', $token, 60));
-        return redirect('/me')->withHeaders([
-                        "Authorization" => 'Bearer '.$token,
-                    ]);
-    }
-  
-    /**
-     * Get the authenticated User.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function me()
-    {
-        return response()->json("masukoy");
+        return redirect('/')-> withCookie(cookie('token', $token));
     }
   
     /**
@@ -92,9 +77,10 @@ class AuthController extends Controller
      */
     public function logout()
     {
-        auth()->logout();
+        $token = JWTAuth::getToken();
+        JWTAuth::invalidate($token);
   
-        return response()->json(['message' => 'Successfully logged out']);
+        return redirect('/');
     }
   
     /**

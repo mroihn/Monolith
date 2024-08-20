@@ -1,30 +1,25 @@
 @extends('layouts.app')
 
 @section('title','Home')
-@if($user != null)
 
+@auth
     @section('nama',$user->username)
-@endif
-{{-- @if($user)
-    @section('nama',$user->username)
-@endif --}}
+@endauth
+
 
 @section('content')
     <div class="grid grid-cols-4">
         <div class="col-span-3 relative top-[100px] grid lg:grid-cols-5 px-5 gap-5">
             @foreach ($filmList as $film)
             <a href="film/{{$film->id}}">
-                <div class=" bg-neutral-800 rounded-sm h-[300px] mb-2 overflow-hidden text-white relative hover:border border-white hover:border-2" href="film/{{$film->id}}">
-                    <img src={{$film->cover_image_url}} alt="cover" class="h-[210px] w-full">
-                    <div class="px-2">
-                        <span class="font-bold text-xl">{{$film->title}}</span>
-                        <span class="block text-gray-500 text-sm">{{$film->release_year}}</span>
-                        <span>{{$film->genre}}</span>
+                <div class=" bg-neutral-800 rounded-sm h-[300px] mb-2 overflow-hidden relative hover:border border-white hover:border-2" href="film/{{$film->id}}">
+                    <img src={{$film->cover_image_url}} alt="cover" class="h-[300px] w-full absolute">
+                    <div class="flex flex-col space-y-2 items-center justify-center absolute opacity-0 h-[300px] w-full ease-in duration-100 hover:duration-150 hover:opacity-100 hover:bg-black hover:bg-opacity-75">
+                        <div class="text-xl">{{$film->title}}</div>
+                        <div>Director : {{$film->director}}</div>
+                        <div>Release Year : {{$film->release_year}}</div>
+                        <div>🪙 {{$film->price}}</div>
                     </div>
-                    <div class="bg-black rounded-full p-2 absolute top-0 ml-2 mt-2 bg-opacity-75">
-                        <span>🪙 {{$film->price}}</span>
-                    </div>
-                    
                 </div>
             </a>
             @endforeach

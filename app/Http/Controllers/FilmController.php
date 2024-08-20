@@ -9,7 +9,11 @@ use Illuminate\Http\Request;
 class FilmController extends Controller
 {
     public function index(Request $request){
-        $user = User::all()->first();
+         return response()->json(auth()->check());
+        $user = null;
+        if(auth()->check()){
+            $user = auth->user();
+        }
         if ((!$request->has('search'))||$request->query('search')=="") {
             $films = Film::all();
             return view('home',['filmList' => $films,'user' => $user]);

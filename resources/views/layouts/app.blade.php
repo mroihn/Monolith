@@ -15,7 +15,13 @@
             <form class="absolute left-[200px] w-[700px]" action="/">
               <input type="text" name="search" placeholder="Search film" autocomplete="off" aria-label="Search film" class="px-3 py-2 w-full font-semibold placeholder-gray-500 text-black rounded-2xl ring-2 ring-gray-300 focus:ring-gray-500 focus:ring-2">
             </form>
+            {{-- @auth   
+              <div class="absolute text-xl font-bold right-5">tess</div>
+            @endauth --}}
+            
             <div class="absolute text-xl font-bold right-5">@yield('nama')</div>
+            {{-- @guest
+            @endguest --}}
           </div>
         </div>
       @endif

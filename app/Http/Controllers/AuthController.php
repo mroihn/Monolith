@@ -2,10 +2,11 @@
   
 namespace App\Http\Controllers;
   
-use App\Http\Controllers\Controller;
-use App\Models\User;
-use Illuminate\Support\Facades\Hash;
 use Validator;
+use App\Models\User;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
+use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
   
   
 class AuthController extends Controller
@@ -56,17 +57,22 @@ class AuthController extends Controller
 
         $credentials = request(['username', 'password']);
   
-        if (! $token = auth()->attempt($credentials)) {
+        if (! $token = JWTAuth::attempt($credentials)) {
             $credentials = request(['username', 'password']);
             $credentials['email'] = $credentials['username'];
             unset($credentials['username']);
-            if (! $token = auth()->attempt($credentials)) {
+            if (! $token = JWTAuth::attempt($credentials)) {
                 return redirect('/login')->withErrors(['login' => 'Incorrect username or password']);
             }
         }
         
-        $user = auth()->user();
-        return redirect('/');
+        // $user = auth()->user();
+        
+        // return response()->json(JWTAuth::user());
+        // return redirect('/me')->withCookie(cookie('token', $token, 60));
+        return redirect('/me')->withHeaders([
+                        "Authorization" => 'Bearer '.$token,
+                    ]);
     }
   
     /**
@@ -76,7 +82,7 @@ class AuthController extends Controller
      */
     public function me()
     {
-        return response()->json(auth()->user());
+        return response()->json("masukoy");
     }
   
     /**

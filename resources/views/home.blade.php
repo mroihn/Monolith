@@ -1,7 +1,10 @@
 @extends('layouts.app')
 
 @section('title','Home')
-@section('nama',$user->username)
+@if($user != null)
+
+    @section('nama',$user->username)
+@endif
 {{-- @if($user)
     @section('nama',$user->username)
 @endif --}}

@@ -26,9 +26,7 @@ Route::post(
 )->name('post_register');
 
 
-Route::get('/token', function () {
-    return csrf_token(); 
-});
+Route::get('/me', [AuthController::class,'me'])->middleware('jwt_auth');
 
 // Route::get('/register', [RegisterController::class, 'showRegisterForm'])
 //   ->name('register');

@@ -21,6 +21,25 @@
             </a>
             @endforeach
         </div>
+        <div class="border border-white px-5 fixed top-[100px] right-0 h-[600px] w-[380px]">
+            <div class="text-lime-400 text-md font-semibold">Recently Added</div>
+            <div class="grid grid-rows-3 h-[573px] w-full">
+                @foreach($last_added as $film)
+                <div class="grid col-span-2 grid-cols-4 px-2">
+                    <div class="flex items-center">
+                        <img src={{$film->cover_image_url}} alt="cover" class="h-[120px] w-[95px] absolute">
+                    </div>
+                </div>
+                <div class="col-span-2 col-start-3 flex flex-col space-y-1 items-center justify-center">
+                    <div class="text-sm">Title: {{$film->title}}</div>
+                    <div class="text-sm">Director: {{$film->director}}</div>
+                    <div class="text-sm">Release Year: {{$film->release_year}}</div>
+                    <div class="text-sm">Price: 🪙{{$film->price}}</div>
+                    
+                </div>
+                @endforeach
+            </div>
+        </div>
     </div>
 @endsection
 

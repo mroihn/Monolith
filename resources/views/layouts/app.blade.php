@@ -30,7 +30,7 @@
             @endauth
 
             @auth
-              <a href="/my_list/{{$user->id}}" class="absolute left-[520px]">
+              <a href="/my_list" class="absolute left-[520px]">
                 <div class="bg-black text-white ease-in duration-200 bg-transparent hover:bg-white hover:text-black w-[100px] h-[50px]  font-semibold flex items-center justify-center">
                   <div>My List</div>
                 </div>

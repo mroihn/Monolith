@@ -8,7 +8,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/',[FilmController::class,'index']);
 Route::get('/film/{id}',[FilmController::class,'show']);
-Route::get('/my_list/{id}',[FilmController::class,'my_list'])->middleware('jwt_auth');
+Route::get('/my_list',[FilmController::class,'my_list'])->middleware('jwt_auth');
+Route::get('film/buy/{id}',[FilmController::class,'buy'])->middleware('jwt_auth');
 
 Route::get('/logout',[AuthController::class,'logout']);
 

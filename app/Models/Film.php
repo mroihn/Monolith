@@ -29,7 +29,7 @@ class Film extends Model
         'description',
         'director',
         'release_year',
-        'genre',
+        'genres',
         'price',
         'duration',
         'video_url',

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('description');
             $table->string('director');
             $table->integer('release_year');
-            $table->string('genre');
+            $table->string('genres');
             $table->integer('price');
             $table->integer('duration');
             $table->string('video_url');

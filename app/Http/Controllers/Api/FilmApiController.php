@@ -17,7 +17,8 @@ class FilmApiController extends Controller
             'description' => 'required|max:255',
             'director' => 'required|max:255',
             'release_year' => 'required|integer',
-            'genre'=>'required',
+            'genre' => 'required|array',
+            'genre.*' => 'string',
             'price'=>'required|integer',
             'duration'=>'required|integer',
             'video' => 'required',
@@ -30,7 +31,7 @@ class FilmApiController extends Controller
             'data' => null,
         ]);
         }
-
+        
         $videoFileName = $this->saveVideo($request);
         $request['video_url'] = env('APP_URL').$videoFileName;
 
@@ -40,7 +41,8 @@ class FilmApiController extends Controller
             $cover = env('APP_URL').$coverFileName;
         }
         $request['cover_image_url'] = $cover;
-        $film = Film::create($request->except(['video', 'cover_image']));
+        $request['genres'] = implode(',', $request->genre);
+        $film = Film::create($request->except(['video', 'cover_image','genre']));
         return response()->json([
             'status' => 'success',
             'message' => 'film created',
@@ -79,7 +81,8 @@ class FilmApiController extends Controller
     public function getFilmById($id){
         if ($film = Film::find($id)) {
             $filmArray = $film -> toArray();
-            $filmArray['genre'] = explode(',', $filmArray['genre']);
+            $filmArray['genre'] = explode(',', $filmArray['genres']);
+            unset($filmArray['genres']);
             return response()->json([
                 'status' => 'success',
                 'message' => 'film found',
@@ -125,10 +128,12 @@ class FilmApiController extends Controller
             }
             $request['video_url'] = $video_url;
             $request['cover_image_url'] = $cover_url;
+            $request['genres'] = implode(',', $request->genre);
             
-            $film->update($request->except(['video', 'cover_image']));
+            $film->update($request->except(['video', 'cover_image','genre']));
             $filmArray = $film -> toArray();
-            $filmArray['genre'] = explode(',', $filmArray['genre']);
+            $filmArray['genre'] = explode(',', $filmArray['genres']);
+            unset($filmArray['genres']);
 
             return response()->json([
                 'status' => 'success',
@@ -146,7 +151,8 @@ class FilmApiController extends Controller
     public function delete($id){
         if ($film = Film::find($id)) {
             $filmArray = $film -> toArray();
-            $filmArray['genre'] = explode(',', $filmArray['genre']);
+            $filmArray['genre'] = explode(',', $filmArray['genres']);
+            unset($filmArray['genres']);
             $film->delete();
             return response()->json([
                 'status' => 'success',

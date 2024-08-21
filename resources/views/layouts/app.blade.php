@@ -10,8 +10,8 @@
     <div class="text-white">
       @if (View::getSection('title')!='Login' && View::getSection('title')!='Register') 
         <div class="relative">
-          <div class="bg-black h-20 border border-white border-b w-screen top-0 fixed text-white flex items-center px-5 z-[100]">
-            <a href="/">
+          <div class="bg-black h-20  w-screen top-0 fixed bg-opacity-70 text-white flex items-center px-5 z-[100]">
+            <a href="/" class="absolute left-[50px]">
               <div class="text-xl font-bold">Monolith</div>
             </a>
             <form class="absolute left-[200px] w-[300px]" action="/">
@@ -19,17 +19,19 @@
             </form>
             @auth
               <a href="/logout" class="absolute right-5">
-                <div class="bg-black text-white ease-in duration-200 hover:bg-white hover:text-black w-[100px] h-[50px]  font-semibold flex items-center justify-center">
+                <div class="bg-black text-white ease-in duration-200 bg-transparent hover:bg-white hover:text-black w-[100px] h-[50px]  font-semibold flex items-center justify-center">
                   <div>Logout</div>
                 </div>
-              </a>   
-              <div class="absolute font-semibold right-[170px]">{{$user->username}}</div>
-              <div class="absolute font-semibold right-[250px]">🪙 {{$user->balance}}</div>
+              </a>
+              <div class="absolute font-semibold flex right-[170px]">
+                <div class="">{{$user->username}}</div>
+                <div class="ml-3">🪙 {{$user->balance}}</div>
+              </div>   
             @endauth
 
             @auth
               <a href="/my_list/{{$user->id}}" class="absolute left-[520px]">
-                <div class="bg-black text-white ease-in duration-200 hover:bg-white hover:text-black w-[100px] h-[50px]  font-semibold flex items-center justify-center">
+                <div class="bg-black text-white ease-in duration-200 bg-transparent hover:bg-white hover:text-black w-[100px] h-[50px]  font-semibold flex items-center justify-center">
                   <div>My List</div>
                 </div>
               </a>

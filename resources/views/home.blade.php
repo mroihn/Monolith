@@ -10,13 +10,14 @@
             <a href="film/{{$film->id}}">
                 <div class=" bg-neutral-800 rounded-sm h-[300px] mb-2 overflow-hidden relative hover:border border-white hover:border-2" href="film/{{$film->id}}">
                     <img src={{$film->cover_image_url}} alt="cover" class="h-[300px] w-full absolute">
-                    <div class="flex flex-col space-y-2 items-center justify-center absolute opacity-0 h-[300px] w-full ease-in duration-100 hover:duration-150 hover:opacity-100 hover:bg-black hover:bg-opacity-75">
+                    <div class="flex flex-col space-y-2 p-5 text-center items-center justify-center absolute opacity-0 h-[300px] w-full ease-in duration-100 hover:duration-150 hover:opacity-100 hover:bg-black hover:bg-opacity-75">
                         <div class="text-xl">{{$film->title}}</div>
-                        <div>Director : {{$film->director}}</div>
-                        <div>Release Year : {{$film->release_year}}</div>
-                        <div>🪙 {{$film->price}}</div>
+                        <div class="text-sm">{{$film->director}}</div>
+                        <div class="text-sm">({{$film->release_year}})</div>
+                        <div>🪙{{$film->price}}</div>
                     </div>
                 </div>
+                <h2>{{$film->title}}</h2>
             </a>
             @endforeach
         </div>

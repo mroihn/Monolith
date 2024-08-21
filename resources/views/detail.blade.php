@@ -9,14 +9,14 @@
                 <source src={{$film->video_url}} type="video/mp4">
             </video>
         </div>
-        <div class=" px-5 fixed top-[80px] right-[50px]">
+        <div class=" px-5 relative top-[80px] right-[30px] w-[360px]">
             <img src={{$film->cover_image_url}} alt="cover" class="h-[210px] w-[150px] relative top-[50px] border border-white border-2">
             <h2 class="text-4xl relative top-[80px]">{{$film->title}}</h2>
             <div class="flex flex-col space-y-2 relative top-[100px]">
-                <div class="mb-[10px]">{{$film->description}}</div>
+                <div class="mb-[10px] text-justify text-xs"><p>{{$film->description}}</p></div>
                 <div>Director : {{$film->director}}</div>
                 <div>Release Year : {{$film->release_year}}</div>
-                <div>Genre : {{$film->genre}}</div>
+                <div>Genre : {{$film->genres}}</div>
                 <div>Price : 🪙 {{$film->price}}</div>
                 @php
                     $duration = $film->duration ;

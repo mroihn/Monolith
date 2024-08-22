@@ -18,6 +18,6 @@ class FilmSeeder extends Seeder
         Film::truncate();
         Schema::enableForeignKeyConstraints();
         
-        Film::factory()->count(20)->create();
+        Film::factory()->count(100)->create();
     }
 }

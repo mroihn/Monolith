@@ -4,7 +4,7 @@
 
 
 @section('content')
-    <div class="grid grid-cols-4">
+    <div class="grid grid-cols-4 relative">
         <div class="col-span-3 relative top-[100px] grid lg:grid-cols-5 px-5 gap-5">
             @foreach ($filmList as $film)
             <a href="film/{{$film->id}}">
@@ -30,7 +30,7 @@
                         <img src={{$film->cover_image_url}} alt="cover" class="h-[120px] w-[95px] absolute">
                     </div>
                 </div>
-                <div class="col-span-2 col-start-3 flex flex-col space-y-1 items-center justify-center">
+                <div class="col-span-2 col-start-3 flex flex-col ml-10 relative space-y-1 items-center justify-center">
                     <div class="text-sm">Title: {{$film->title}}</div>
                     <div class="text-sm">Director: {{$film->director}}</div>
                     <div class="text-sm">Release Year: {{$film->release_year}}</div>
@@ -40,6 +40,9 @@
                 @endforeach
             </div>
         </div>
+    </div>
+   <div class="relative bg-black text-white mt-[120px] px-10 mb-[80px] w-[1100px]">
+        {{$filmList->withQueryString()->links()}}
     </div>
 @endsection
 

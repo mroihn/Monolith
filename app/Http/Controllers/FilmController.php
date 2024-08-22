@@ -16,15 +16,14 @@ class FilmController extends Controller
         if(auth()->check()){
             $user =JWTAuth::user();
         }
-            
-        if ((!$request->has('search'))||$request->query('search')=="") {
-            $films = Film::all();
-            return view('home',['filmList' => $films,'user' => $user,'last_added'=>$last_added]);
-        }
 
-        $title = $request->query('search');
-        $director = $request->query('search');
-        $films = Film::where('title','LIKE', "%{$title}%")->orWhere('director','LIKE', "%{$director}%")->get();
+        $search = $request->search;
+
+        $films = Film::where('title','LIKE', "%{$search}%")
+                       ->orWhere('director','LIKE', "%{$search}%")
+                       ->orWhere('release_year','LIKE', "%{$search}%")
+                       ->orWhere('genres','LIKE', "%{$search}%")
+                       ->paginate(15);
         
         return view('home',['filmList' => $films,'user' => $user,'last_added'=>$last_added]);
     }

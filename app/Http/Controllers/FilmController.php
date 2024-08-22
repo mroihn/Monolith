@@ -22,8 +22,6 @@ class FilmController extends Controller
             return view('home',['filmList' => $films,'user' => $user,'last_added'=>$last_added]);
         }
 
-       
-
         $title = $request->query('search');
         $director = $request->query('search');
         $films = Film::where('title','LIKE', "%{$title}%")->orWhere('director','LIKE', "%{$director}%")->get();
@@ -39,7 +37,7 @@ class FilmController extends Controller
             $user =JWTAuth::user();
             $purchase=Purchase::with('films')->where('user_id',$user->id)->where('film_id',$film->id)->get();
         }
-        // return response()->json($purchase);
+
         return view('detail',['film'=>$film,'user' => $user,'purchase'=>$purchase]);
     }
 
@@ -48,8 +46,7 @@ class FilmController extends Controller
         $user_id = $user->id;
         $film = Purchase::with('films')->where('user_id',$user_id)->get()->pluck('films');
         $last_added= Film::orderBy('created_at', 'desc')->limit(3)->get();
-        // $film = Purchase::with('users')->get();
-        // return response()->json($film);
+
         return view('home',['filmList'=>$film,'user' => $user,'last_added'=>$last_added]);
     }
 
@@ -64,13 +61,9 @@ class FilmController extends Controller
                 'film_id' => $film->id,
             ]);
             
-
             $user->balance -= $film->price;
             $user->save();
-
-            return redirect()->back();
         }
-
         return redirect()->back();
     }
 }

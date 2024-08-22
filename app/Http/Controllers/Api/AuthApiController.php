@@ -2,23 +2,34 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\ValidationException;
-use Illuminate\Support\Facades\Hash;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
+
 
 class AuthApiController extends Controller
 {
     public function login(Request $request){
+        $validator = Validator::make(request()->all(), [
+            'username' => 'required',
+            'password' => 'required',
+        ]);
+  
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'error',
+                'message' =>'Gagal Login',
+                'data'=>null,
+            ]);
+        }
        
         $credentials = request(['username', 'password']);
 
         if ((! $token = auth()->attempt($credentials)) || ($request->username !== 'admin')) {
             return response()->json([
                 'status' => 'error',
-                'message' =>'The provided credentials are incorrect.',
+                'message' =>'Gagal Login',
                 'data'=>null,
             ]);
         }
@@ -50,14 +61,14 @@ class AuthApiController extends Controller
 
             return response()->json([
                 'status' => 'success',
-                'message' => 'User information retrieved successfully.',
+                'message' => 'Berhasil Get Self',
                 'data' => $data,
             ]);
         }
 
         return response()->json([
             'status' => 'error',
-            'message' => 'User is unauthenticated.',
+            'message' => 'Gagal get self',
             'data' => null,
         ]); 
     }

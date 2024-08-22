@@ -14,7 +14,7 @@ class FilmApiController extends Controller
     public function create(Request $request){
         $validator = Validator::make(request()->all(),[
             'title' => 'required|max:255',
-            'description' => 'required|max:255',
+            'description' => 'required|max:1100',
             'director' => 'required|max:255',
             'release_year' => 'required|integer',
             'genre' => 'required|array',
@@ -26,10 +26,10 @@ class FilmApiController extends Controller
 
         if($validator->fails()){
             return response()->json([
-            'status' => 'error',
-            'message' => 'gagal post film',
-            'data' => null,
-        ]);
+                'status' => 'error',
+                'message' => 'gagal post film',
+                'data' => null,
+            ]);
         }
         
         $videoFileName = $this->saveVideo($request);
@@ -55,7 +55,7 @@ class FilmApiController extends Controller
             $films = Film::all();
             return response()->json([
                 'status' => 'success',
-                'message' => 'films found',
+                'message' => 'berhasil get film',
                 'data' => FilmResource::collection($films),
             ]); 
         }
@@ -66,14 +66,14 @@ class FilmApiController extends Controller
         if ($film) {
             return response()->json([
                 'status' => 'success',
-                'message' => 'film found',
+                'message' => 'berhasil get film',
                 'data' => FilmResource::collection($film),
             ]);
         }
 
         return response()->json([
             'status' => 'error',
-            'message' => '',
+            'message' => 'gagal get film',
             'data' => null,
         ], 404);
     }
@@ -99,20 +99,21 @@ class FilmApiController extends Controller
     public function update(Request $request,$id){
         $validator = Validator::make(request()->all(),[
             'title' => 'required|max:255',
-            'description' => 'required|max:255',
+            'description' => 'required|max:1100',
             'director' => 'required|max:255',
             'release_year' => 'required|integer',
-            'genre'=>'required',
+            'genre' => 'required|array',
+            'genre.*' => 'string',
             'price'=>'required|integer',
             'duration'=>'required|integer',
         ]);
 
         if($validator->fails()){
             return response()->json([
-            'status' => 'error',
-            'message' => 'gagal put film',
-            'data' => null,
-        ]);
+                'status' => 'error',
+                'message' => 'gagal put film',
+                'data' => null,
+            ]);
         }
 
         if ($film = Film::find($id)){

@@ -35,9 +35,12 @@
                                 <button id="close-modal-btn" type="button" class="bg-black text-white ease-in duration-200 hover:bg-red-700 hover:text-black w-[100px] h-[50px] font-semibold flex items-center justify-center">
                                     Cancel
                                 </button>
-                                <button id="buy-btn" type="button" film-id={{ $film->id }} class="bg-black text-white ease-in duration-200 hover:bg-lime-300 hover:text-black w-[100px] h-[50px] font-semibold flex items-center justify-center">
-                                    Buy
-                                </button>
+                                <form method="POST" action="/buy/{{$film->id}}">
+                                    @csrf
+                                    <button id="buy-btn" type="submit" film-id={{ $film->id }} class="bg-black text-white ease-in duration-200 hover:bg-lime-300 hover:text-black w-[100px] h-[50px] font-semibold flex items-center justify-center">
+                                        Buy
+                                    </button>
+                                </form>    
                             </div>
                             </div>
                         </div>
@@ -72,12 +75,6 @@
 
         document.getElementById("close-modal-btn").addEventListener("click", function() {
             document.getElementById("modal").classList.add("hidden");
-        });
-
-        document.getElementById("buy-btn").addEventListener("click", function() {
-            // var filmId = this.getAttribute('film-id');
-            var q = this.getAttribute('film-id');
-            window.location.href = "buy/"+q;
         });
 
     </script>

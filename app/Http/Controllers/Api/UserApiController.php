@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
+use Illuminate\Support\Facades\Validator;
 
 class UserApiController extends Controller
 {
@@ -52,9 +53,17 @@ class UserApiController extends Controller
     }
 
     public function updateBalance(Request $request,$id){
-        $request->validate([
+        $validator = Validator::make(request()->all(),[
             'increment' => 'required|integer',
         ]);
+        
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'error',
+                'message' => 'gagal update balance',
+                'data' => null,
+            ]);
+        }
 
         if ($user = User::find($id)) {
             $user->balance += $request->input('increment');

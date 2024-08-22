@@ -12,12 +12,6 @@ use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
   
 class AuthController extends Controller
 {
- 
-    /**
-     * Register a User.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
 
     public function register() {
         $validator = Validator::make(request()->all(), [
@@ -42,19 +36,19 @@ class AuthController extends Controller
         $user->password = Hash::make(request()->password);
         $user->save();
         
-        // return redirect('/login');
         return redirect('/register')->with('success', 'account successfully created');
-        // return response()->json($user, 201);
     }
   
-  
-    /**
-     * Get a JWT via given credentials.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function login(Request $request)
     {
+        $validator = Validator::make(request()->all(), [
+            'username' => 'required',
+            'password' => 'required',
+        ]);
+  
+        if($validator->fails()){
+            return redirect('/login')->withErrors(['login' => 'Incorrect username or password']);
+        }
 
         $credentials = request(['username', 'password']);
   
@@ -70,11 +64,6 @@ class AuthController extends Controller
         return redirect('/')-> withCookie(cookie('token', $token));
     }
   
-    /**
-     * Log the user out (Invalidate the token).
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function logout()
     {
         $token = JWTAuth::getToken();
@@ -83,29 +72,4 @@ class AuthController extends Controller
         return redirect('/');
     }
   
-    /**
-     * Refresh a token.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function refresh()
-    {
-        return $this->respondWithToken(auth()->refresh());
-    }
-  
-    /**
-     * Get the token array structure.
-     *
-     * @param  string $token
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    protected function respondWithToken($token)
-    {
-        return response()->json([
-            'access_token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60
-        ]);
-    }
 }

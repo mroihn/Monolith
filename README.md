@@ -15,7 +15,7 @@ Penggunaan Active Record Pattern terlihat melalui implementasi kelas model seper
 
 ## How To Use
 ```
-git clone https://github.com/mroihn/Queens_Solver.git
+https://github.com/mroihn/Monolith.git
 composer install
 setup the env
 php artisan migrate

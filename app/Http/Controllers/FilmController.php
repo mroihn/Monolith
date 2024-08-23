@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Film;
-use App\Models\Purchase;
 use App\Models\User;
+use App\Models\Purchase;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 
 class FilmController extends Controller
@@ -24,7 +25,6 @@ class FilmController extends Controller
                        ->orWhere('release_year','LIKE', "%{$search}%")
                        ->orWhere('genres','LIKE', "%{$search}%")
                        ->paginate(15);
-        
         return view('home',['filmList' => $films,'user' => $user,'last_added'=>$last_added]);
     }
 
@@ -43,10 +43,13 @@ class FilmController extends Controller
     public function my_list(){
         $user =JWTAuth::user();
         $user_id = $user->id;
-        $film = Purchase::with('films')->where('user_id',$user_id)->get()->pluck('films');
+        $currentPage = LengthAwarePaginator::resolveCurrentPage();
+        $perPage = 15;
+        $items = Purchase::with('films')->where('user_id',$user_id)->get()->pluck('films')->flatten();
+        $currentItems = $items->slice($perPage * ($currentPage - 1), $perPage);
+        $films = new LengthAwarePaginator($currentItems, count($items), $perPage, $currentPage);
         $last_added= Film::orderBy('created_at', 'desc')->limit(3)->get();
-
-        return view('home',['filmList'=>$film,'user' => $user,'last_added'=>$last_added]);
+        return view('home',['filmList'=>$films,'user' => $user,'last_added'=>$last_added]);
     }
 
     public function buy($id){
